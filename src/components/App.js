@@ -9,6 +9,10 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import ConfirmationPopup from "./ConfirmationPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import {Route, Switch} from 'react-router-dom';
+import Register from "./Register";
+import Login from "./Login";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);        // Стейт попап редактирования профиля открыт
@@ -19,6 +23,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({name: '', about: ''});              // Стейт данные текущего пользователя
   const [deletedCard, setDeletedCard] = useState(null);                               // Стейт выбранная карточка для удаления
   const [cards, setCards] = useState([]);                                             // Стейт массив карточек
+  const [loggedIn, setLoggedIn] = useState(false);                                             // Стейт массив карточек
   const [isLoadingCards, setIsLoadingCards] = useState(true);                         // Стейт прелоадер загрузки карточек
   const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);                   // Стейт прелоадер загрузки информации пользователя
   const [isLoadingButtonText, setIsLoadingButtonText] = useState(false);              // Стейт надпись на кнопке при сохранении контента
@@ -167,17 +172,29 @@ function App() {
       <div className="page">
         <div className="page__container">
           <Header/>
-          <Main
-            onEditAvatar={handleEditAvatarClick}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-            cards={cards}
-            isLoadingCards={isLoadingCards}
-            isLoadingUserInfo={isLoadingUserInfo}
-          />
+          <Switch>
+            <Route path='/sign-up'>
+              <Register />
+            </Route>
+            <Route path='sign-in'>
+              <Login />
+            </Route>
+            <ProtectedRoute
+              exact path='/'
+              loggedIn={loggedIn}
+              component={Main}
+              onEditAvatar={handleEditAvatarClick}
+              onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              cards={cards}
+            />
+            <Route path='/'>
+              <Register to='/' />
+            </Route>
+          </Switch>
           <Footer/>
           {/*Попап редактировать профиль*/}
           <EditProfilePopup
