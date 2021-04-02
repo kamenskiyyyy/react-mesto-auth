@@ -6,6 +6,7 @@ function PopupWithForm(props) {
                     className="button button_type_close "
                     aria-label="Закрыть"
                     onClick={props.onClose}/>
+              {props.statusImage && <img src={props.statusImage} alt='Статус запроса' className='popup_type_image' /> }
                 <h2 className="popup__title">{props.title}</h2>
                 <form name={props.name} action="#" className="popup__form" onSubmit={props.onSubmit} noValidate>
                     {props.children}

@@ -1,0 +1,21 @@
+.sign__input {
+  width: 100%;
+  min-height: 27px;
+  padding-bottom: 5px;
+  margin-bottom: 30px;
+  background-color: transparent;
+  color: #fff;
+  border: 0;
+  border-bottom: 1px solid white;
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+.sign__input:last-of-type {
+  margin-bottom: 30vh;
+}
+
+.sign__input::placeholder {
+  color: #ccc;
+}

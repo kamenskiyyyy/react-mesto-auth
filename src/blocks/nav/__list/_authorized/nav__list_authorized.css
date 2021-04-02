@@ -1,0 +1,9 @@
+.nav__list_authorized {
+  display: none;
+}
+
+@media screen and (min-width: 600px) and (min-height: 400px) {
+  .nav__list_authorized {
+    display: flex;
+  }
+}

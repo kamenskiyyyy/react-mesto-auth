@@ -1,0 +1,14 @@
+.nav {
+  margin: 0 19px 0 0;
+  font-size: 14px;
+  line-height: 1.22;
+  color: inherit;
+  position: relative;
+}
+
+@media screen and (min-width: 600px) and (min-height: 400px) {
+  .nav {
+    margin: 0;
+    font-size: 18px;
+  }
+}

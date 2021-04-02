@@ -1,0 +1,8 @@
+.nav__list_type_mobile {
+  display: flex;
+  padding-top: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}

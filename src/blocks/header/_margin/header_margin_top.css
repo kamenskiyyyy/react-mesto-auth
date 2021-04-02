@@ -1,0 +1,9 @@
+.header_margin_top {
+    margin-top: 142px;
+}
+
+@media screen and (min-width: 600px) {
+    .header_margin_top {
+        margin-top: 0;
+    }
+}

@@ -1,0 +1,9 @@
+.nav__link {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity .3s;
+}
+
+.nav__link:hover {
+  opacity: .6;
+}

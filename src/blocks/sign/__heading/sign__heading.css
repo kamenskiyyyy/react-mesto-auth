@@ -1,0 +1,12 @@
+.sign__heading {
+  margin: 40px 0;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+@media screen and (min-width: 600px) and (min-height: 400px) {
+  .sign__heading {
+    margin: 60px 0 50px 0;
+    font-size: 24px;
+  }
+}

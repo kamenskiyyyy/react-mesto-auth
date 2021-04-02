@@ -1,0 +1,11 @@
+.sign__link {
+  display: inline-block;
+  margin-left: 4px;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity .3s;
+}
+
+.sign__link:hover {
+  opacity: .6;
+}

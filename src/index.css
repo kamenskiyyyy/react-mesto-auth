@@ -12,6 +12,7 @@
 
 @import url('./blocks/header/header.css');
 @import url('./blocks/header/__logo/header__logo.css');
+@import url('./blocks/header/_margin/header_margin_top.css');
 
 @import url('./blocks/main/main.css');
 
@@ -33,6 +34,9 @@
 @import url('./blocks/button/_type/button_type_submit.css');
 @import url('./blocks/button/_type/button_type_delete.css');
 @import url('./blocks/button/_disabled/button_disabled.css');
+@import url('./blocks/button/_type/button_type_open-nav.css');
+@import url('./blocks/button/_type/button_type_close-nav.css');
+@import url('./blocks/button/_type/button_type_logout.css');
 
 @import url('./blocks/button/_hidden/button_hidden.css');
 @import url('./blocks/cards-list/cards-list.css');
@@ -40,6 +44,27 @@
 @import url('./blocks/card/__image/card__image.css');
 @import url('./blocks/card/__description/card__description.css');
 @import url('./blocks/card/__name/card__name.css');
+
+@import url('./blocks/nav/nav.css');
+@import url('./blocks/nav/_type/nav_type_mobile.css');
+@import url('./blocks/nav/_opened/nav_opened.css');
+@import url('./blocks/nav/__list/nav__list.css');
+@import url('./blocks/nav/__list/_type/nav__list_type_mobile.css');
+@import url('./blocks/nav/__list/_authorized/nav__list_authorized.css');
+@import url('./blocks/nav/__item/nav__item.css');
+@import url('./blocks/nav/__item/_type/nav__item_type_mobile.css');
+@import url('./blocks/nav/__item/_margin/nav__item_margin_right.css');
+@import url('./blocks/nav/__link/nav__link.css');
+@import url('./blocks/nav/__link/_active/nav__link_active.css');
+
+@import url('./blocks/sign/sign.css');
+@import url('./blocks/sign/__heading/sign__heading.css');
+@import url('./blocks/sign/__form/sign__form.css');
+@import url('./blocks/sign/__fieldset/sign__fieldset.css');
+@import url('./blocks/sign/__input/sign__input.css');
+@import url('./blocks/sign/__button/sign__button.css');
+@import url('./blocks/sign/__signin/sign__signin.css');
+@import url('./blocks/sign/__link/sign__link.css');
 
 @import url('./blocks/card/__likes/card__likes.css');
 @import url('./blocks/card/__like-counter/card__like-counter.css');

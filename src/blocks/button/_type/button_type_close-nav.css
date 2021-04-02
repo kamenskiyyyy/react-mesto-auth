@@ -1,0 +1,7 @@
+.button_type_close-nav {
+    width: 40px;
+    height: 40px;
+    background-image: url('./../../../images/close.svg');
+    top: -12px;
+    right: 3px;
+}

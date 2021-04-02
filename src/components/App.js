@@ -13,6 +13,9 @@ import {Route, Switch} from 'react-router-dom';
 import Register from "./Register";
 import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
+import {statusSuccessText} from "../utils/constants";
+import statusSuccessImage from '../images/success.svg';
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);        // Стейт попап редактирования профиля открыт
@@ -23,7 +26,11 @@ function App() {
   const [currentUser, setCurrentUser] = useState({name: '', about: ''});              // Стейт данные текущего пользователя
   const [deletedCard, setDeletedCard] = useState(null);                               // Стейт выбранная карточка для удаления
   const [cards, setCards] = useState([]);                                             // Стейт массив карточек
-  const [loggedIn, setLoggedIn] = useState(false);                                             // Стейт массив карточек
+  const [loggedIn, setLoggedIn] = useState(false);                                    // Стейт-переменная статус пользователя, вход в систему
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);                  // Стейт попап редактирования аватара открыт
+  const [isNavOpened, setIsNavOpened] = useState(false);                              // Стейт мобильная навигация открыта
+  const [statusImage, setStatusImage] = useState(statusSuccessImage);                           // Стейт картинки-статуса запроса Login/Register
+  const [statusText, setStatusText] = useState(statusSuccessText);                              // Стейт текста-статуса запроса Login/Register
   const [isLoadingCards, setIsLoadingCards] = useState(true);                         // Стейт прелоадер загрузки карточек
   const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);                   // Стейт прелоадер загрузки информации пользователя
   const [isLoadingButtonText, setIsLoadingButtonText] = useState(false);              // Стейт надпись на кнопке при сохранении контента
@@ -51,6 +58,7 @@ function App() {
 
   // Функция закрытия всех попапов
   function closeAllPopups() {
+    setIsInfoTooltipOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
@@ -128,6 +136,16 @@ function App() {
       })
   }
 
+  // Обработчик по кнопке Войти
+  function handleLogin() {
+    setIsInfoTooltipOpen(true);
+  }
+
+  // Обработчик клика по меню
+  function handleNavClick() {
+    setIsNavOpened(!isNavOpened);
+  }
+
   // Загрузка карточек по умолчанию
   useEffect(() => {
     api.getInitialCards()
@@ -148,12 +166,16 @@ function App() {
       }
     }
 
-    (isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || isConfirmationPopupOpen || selectedCard) && document.addEventListener('keydown', handleEscClose);
+    (isEditProfilePopupOpen
+      || isAddPlacePopupOpen
+      || isEditAvatarPopupOpen
+      || isConfirmationPopupOpen
+      || selectedCard) && document.addEventListener('keydown', handleEscClose);
 
     return () => {
       document.removeEventListener('keydown', handleEscClose);
     }
-  }, [isEditProfilePopupOpen, isAddPlacePopupOpen, isEditAvatarPopupOpen, isConfirmationPopupOpen, selectedCard]);
+  }, [isInfoTooltipOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, isEditAvatarPopupOpen, isConfirmationPopupOpen, selectedCard]);
 
   // Загрузка данных пользователя
   useEffect(() => {
@@ -171,13 +193,17 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <div className="page__container">
-          <Header/>
+          <Header
+            loggedIn={loggedIn}
+            isNavOpened={isNavOpened}
+            onClickNav={handleNavClick}
+          />
           <Switch>
             <Route path='/sign-up'>
-              <Register />
+              <Register onRegister={handleLogin}/>
             </Route>
             <Route path='sign-in'>
-              <Login />
+              <Login onLogin={handleLogin}/>
             </Route>
             <ProtectedRoute
               exact path='/'
@@ -192,10 +218,10 @@ function App() {
               cards={cards}
             />
             <Route path='/'>
-              <Register to='/' />
+              <Register to='/'/>
             </Route>
           </Switch>
-          <Footer/>
+          {loggedIn && <Footer />}
           {/*Попап редактировать профиль*/}
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
@@ -226,6 +252,13 @@ function App() {
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
             isLoadingButtonText={isLoadingButtonText}/>
+          {/* <!-- Попап статус подтверждение --> */}
+          <InfoTooltip
+            isOpen={isInfoTooltipOpen}
+            onClose={closeAllPopups}
+            statusImage={statusImage}
+            statusText={statusText}
+          />
         </div>
       </div>
     </CurrentUserContext.Provider>

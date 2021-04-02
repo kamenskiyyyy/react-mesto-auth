@@ -1,0 +1,15 @@
+.nav_type_mobile {
+  width: 100%;
+  margin: 0;
+  flex-direction: column;
+  position: absolute;
+  top: -142px;
+  left: 0;
+  transition: top .3s;
+}
+
+@media screen and (min-width: 600px) {
+  .nav_type_mobile {
+    display: none;
+  }
+}
