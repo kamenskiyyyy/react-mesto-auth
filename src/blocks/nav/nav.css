@@ -6,7 +6,7 @@
   position: relative;
 }
 
-@media screen and (min-width: 600px) and (min-height: 400px) {
+@media screen and (min-width: 600px) {
   .nav {
     margin: 0;
     font-size: 18px;

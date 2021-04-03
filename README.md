@@ -16,7 +16,7 @@
 посетив его? Просто используйте приложение "Mesto | Russia" и расслабьтесь. Теперь вы точно ничего не забудете, а
 главная страничка со временем превратиться в настоящий альбом путешественника, который не стыдно будет показать друзьям.
 
-* [Ссылка на проект](https://kamenskiyyyy.github.io/mesto-react/)
+* [Ссылка на проект](https://kamenskiyyyy.github.io/react-mesto-auth/)
 
 **Картинки**
 
@@ -38,8 +38,8 @@
 **Установка**
 
 Проект можно скачать себе и развернуть локально из гитхаб
-репозитория [mesto](https://github.com/kamenskiyyyy/mesto-react/), командой:
+репозитория [mesto](https://github.com/kamenskiyyyy/react-mesto-auth/), командой:
 
  ```html
-$ git clone https://github.com/kamenskiyyyy/mesto-react.git
+$ git clone https://github.com/kamenskiyyyy/react-mesto-auth.git
 ```

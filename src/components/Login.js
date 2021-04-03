@@ -1,9 +1,6 @@
-import {useHistory} from "react-router-dom";
 import {useState} from "react";
-import * as auth from './../utils/auth';
 
-function Login({handleLogin, handleError}) {
-  const history = useHistory();
+function Login({handleLogin}) {
   const [userData, setUserData] = useState({
     password: '',
     email: ''
@@ -23,29 +20,38 @@ function Login({handleLogin, handleError}) {
     if (!password || !email) {
       return;
     }
-    auth.authorize(password, email)
-      .then(data => {
-        if (data.token) {
-          handleLogin(email);
-          history.push('/');
-        } else {
-          handleError(evt.target, data);
-        }
-      })
-      .catch(err => console.error(err));
+    handleLogin(evt, password, email);
   }
+
   return (
     <>
-    <div className="sign">
-      <p className="sign__heading">Вход</p>
-      <form onSubmit={handleSubmit} name='login-form' className="sign__form">
-        <fieldset className="sign__fieldset">
-          <input type="email" value={userData.email} onChange={handleChange} placeholder='Email' className="sign__input"/>
-          <input type="password" value={userData.password} onChange={handleChange} placeholder='Password' className="sign__input"/>
-        </fieldset>
-        <button type='submit' className="sign__button">Войти</button>
-      </form>
-    </div>
+      <div className="sign">
+        <p className="sign__heading">Вход</p>
+        <form
+          name="login-form"
+          className="sign__form"
+          onSubmit={handleSubmit}>
+          <fieldset className="sign__fieldset">
+            <input
+              type="text"
+              name="email"
+              value={userData.email}
+              className="sign__input"
+              onChange={handleChange}
+              placeholder="Email"
+            />
+            <input
+              type="password"
+              name="password"
+              value={userData.password}
+              className="sign__input"
+              onChange={handleChange}
+              placeholder="Пароль"
+            />
+          </fieldset>
+          <button type="submit" className="sign__button">Войти</button>
+        </form>
+      </div>
     </>
   )
 }

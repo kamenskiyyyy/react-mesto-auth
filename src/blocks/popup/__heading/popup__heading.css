@@ -1,0 +1,18 @@
+.popup__heading {
+  margin: 0 0 70px;
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 1.22;
+}
+
+.popup__heading:last-child {
+  margin: 0 0 30px;
+}
+
+@media screen and (min-width: 600px) {
+  .popup__heading {
+    margin: 0 0 39px;
+    font-size: 24px;
+    line-height: 1.21; 
+  }
+}

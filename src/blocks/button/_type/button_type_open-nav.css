@@ -1,16 +1,17 @@
 .button_type_open-nav {
-    width: 25px;
-    height: 20px;
-    background-image: url('./../../../images/bars-solid.svg');
-    background-size: cover;
-    border: 0;
-    position: absolute;
-    top: -2px;
-    right: 10px;
+  width: 25px;
+  height: 20px;
+  background-image: url('./../../../images/icons/bars-solid.svg');
+  background-size: cover;
+  border: 0;
+  position: absolute;
+  top: -2px;
+  right: 10px;
+  /* transition: background-image .3s; */
 }
 
-@media screen and (min-width: 600px) and (min-height: 400px) {
-    .button_type_open-nav {
-        display: none;
-    }
+@media screen and (min-width: 600px) {
+  .button_type_open-nav {
+    display: none;
+  }
 }

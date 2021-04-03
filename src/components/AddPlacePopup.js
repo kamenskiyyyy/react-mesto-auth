@@ -28,36 +28,38 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, isLoadingButtonText}) {
       isOpened={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      name='place'
-      title='Новое место'
-      buttonText={isLoadingButtonText ? 'Сохранение...' : 'Создать'}
+      name="add-card"
+      title="Новое место"
     >
-      <label className="popup__label">
+      <label className="form__field">
         <input
-          id='place-name'
+          type="text"
+          name="card-name"
+          id="card-name-input"
           value={name}
           onChange={handleCardNameChange}
-          type='text'
-          minLength='2'
-          maxLength='30'
-          name='name'
-          className='popup__input'
+          className="form__input form__input_size_small form__input_el_card-name"
+          placeholder="Название"
           required
-          placeholder='Название'/>
-        <span id='place-name-error' className='popup__error'/>
+          minLength="2"
+          maxLength="30"
+          autoComplete="off"/>
+        <span className="form__input-error card-name-input-error"/>
       </label>
-      <label className="popup__label">
-        <input
-          id='place-link'
-          value={link}
-          onChange={handleCardLinkChange}
-          type='url'
-          name='link'
-          className='popup__input'
-          required
-          placeholder='Ссылка на картинку'/>
-        <span id='place-link-error' className='popup__error'/>
+      <label className="form__field">
+        <input type="url"
+               name="card-link"
+               id="card-link-input"
+               value={link}
+               onChange={handleCardLinkChange}
+               className="form__input form__input_size_small form__input_el_card-link"
+               placeholder="Ссылка на картинку"
+               required
+               autoComplete="off"/>
+        <span className="form__input-error card-link-input-error"/>
       </label>
+      <button type="submit"
+              className="button button_type_submit">{isLoadingButtonText ? 'Сохранение...' : 'Создать'}</button>
     </PopupWithForm>
   )
 }

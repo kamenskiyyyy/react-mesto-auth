@@ -1,13 +1,22 @@
 .button {
+  min-width: 10px;
+  min-height: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: transparent;
+  border: 1px solid white;
+  font-size: 18px;
+  line-height: 1.22;
+  text-align: center;
   box-sizing: border-box;
-  cursor: pointer;
-  margin: 0;
-  padding: 0;
+  transition: opacity .3s;
   outline: none;
-  border: 0;
-  transition: opacity 0.4s linear;
 }
 
-.button:hover {
-  opacity: .6;
+@media screen and (min-width: 600px) and (min-height: 400px) {
+  .button:hover {
+    opacity: .6;
+    cursor: pointer;
+  }
 }

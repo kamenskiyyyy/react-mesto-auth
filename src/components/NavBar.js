@@ -1,4 +1,4 @@
-import {NavLink, useHistory} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {AppContext} from "../contexts/AppContext";
 import {useContext} from "react";
 
@@ -11,7 +11,7 @@ function NavBar({isNavOpened, onClickNav}) {
 
   return (
     <>
-      {/*  Меню неавторизованный пользователь */}
+      {/* Меню неавторизованный пользователь */}
       {!value.loggedIn &&
       <nav className="nav">
         <ul className="nav__list">
@@ -22,9 +22,9 @@ function NavBar({isNavOpened, onClickNav}) {
         </ul>
       </nav>
       }
-      {/*  Меню авторизованный пользователь */}
-      {!value.loggedIn &&
-      <nav className='nav'>
+      {/* Меню авторизованный пользователь */}
+      {value.loggedIn &&
+      <nav className="nav">
         <button type="button" className={`button button_type_open-nav ${isNavOpened && 'button_type_close-nav'}`}
                 onClick={handleClick}/>
         <ul className="nav__list nav__list_authorized">
@@ -35,12 +35,14 @@ function NavBar({isNavOpened, onClickNav}) {
         </ul>
       </nav>
       }
-      {/*  Меню авторизованный пользователь */}
+      {/* Меню мобильная версия */}
       {value.loggedIn &&
       <nav className={`nav nav_type_mobile ${isNavOpened && 'nav_opened'}`}>
         <ul className="nav__list nav__list_type_mobile">
           <li className="nav__item nav__item_type_mobile">{value.userEmail}</li>
-          <li className="nav__item"><button type="button" className="button button_type_logout" onClick={value.signOut}>Выйти</button></li>
+          <li className="nav__item">
+            <button type="button" className="button button_type_logout" onClick={value.signOut}>Выйти</button>
+          </li>
         </ul>
       </nav>
       }

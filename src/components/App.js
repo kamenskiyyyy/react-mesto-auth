@@ -1,47 +1,49 @@
 import {useState, useEffect} from 'react';
-import Header from "./Header";
-import Main from "./Main";
-import Footer from "./Footer";
-import ImagePopup from "./ImagePopup";
-import api from "../utils/api";
-import {CurrentUserContext} from "../contexts/CurrentUserContext";
-import EditProfilePopup from "./EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup";
-import ConfirmationPopup from "./ConfirmationPopup";
-import AddPlacePopup from "./AddPlacePopup";
-import {Route, Switch, useHistory} from 'react-router-dom';
-import Register from "./Register";
-import Login from "./Login";
-import ProtectedRoute from "./ProtectedRoute";
-import {statusErrors, statusSuccessMessage} from "../utils/constants";
-import InfoTooltip from "./InfoTooltip";
+import {Route, Switch, Redirect, useHistory} from 'react-router-dom';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+import ConfirmationPopup from './ConfirmationPopup';
+import ImagePopup from './ImagePopup';
+import {api, auth} from '../utils/api';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
+import {AppContext} from '../contexts/AppContext';
+import Login from './Login';
+import Register from './Register';
+import ProtectedRoute from './ProtectedRoute';
+import InfoTooltip from './InfoTooltip';
 import statusSuccessImage from './../images/success.svg';
 import statusErrorImage from './../images/error.svg';
-import * as auth from './../utils/auth';
-import {AppContext} from "../contexts/AppContext";
+import {statusErrors, statusSuccessMessage} from '../utils/constants';
 
 function App() {
   const history = useHistory();
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);        // Стейт попап редактирования профиля открыт
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);              // Стейт попап добавить карточку открыт
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);          // Стейт попап редактирования аватара открыт
-  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);      // Стейт попап подтверждения удаления карточки открыт
-  const [selectedCard, setSelectedCard] = useState(null);                             // Стейт выбранная карточка для передачи картинки карточки в попап
-  const [currentUser, setCurrentUser] = useState({name: '', about: '', email: ''});   // Стейт данные текущего пользователя
-  const [deletedCard, setDeletedCard] = useState(null);                               // Стейт выбранная карточка для удаления
-  const [cards, setCards] = useState([]);                                             // Стейт массив карточек
-  const [loggedIn, setLoggedIn] = useState(false);                                    // Стейт-переменная статус пользователя, вход в систему
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);                  // Стейт попап редактирования аватара открыт
-  const [isNavOpened, setIsNavOpened] = useState(false);                              // Стейт мобильная навигация открыта
-  const [isLoadingCards, setIsLoadingCards] = useState(true);                         // Стейт прелоадер загрузки карточек
-  const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);                   // Стейт прелоадер загрузки информации пользователя
-  const [isLoadingButtonText, setIsLoadingButtonText] = useState(false);              // Стейт надпись на кнопке при сохранении контента
-  const [userEmail, setUserEmail] = useState('');                                     // Стейт email пользователя
-  const [infoTooltip, setInfoTooltip] = useState({                                    // Стейт информационного попапа статуса
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);                       // Стейт попап редактирования профиля открыт
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);                             // Стейт попап добавить карточку открыт
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);                         // Стейт попап редактирования аватара открыт
+  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);                     // Стейт попап подтверждения удаления карточки открыт
+  const [selectedCard, setSelectedCard] = useState(null);                                            // Стейт выбранная карточка для передачи картинки карточки в попап
+  const [deletedCard, setDeletedCard] = useState(null);                                              // Стейт выбранная карточка для удаления
+  const [currentUser, setCurrentUser] = useState({                                                   // Стейт данные текущего пользователя
+    name: '',
+    about: '',
+    email: ''
+  });
+  const [cards, setCards] = useState([]);                                                            // Стейт массив карточек
+  const [loggedIn, setLoggedIn] = useState(false);                                                   // Стейт-переменная статус пользователя, вход в систему
+  const [infoTooltip, setInfoTooltip] = useState({                                                   // Стейт информационного попапа статуса
     isOpen: false,
     image: statusSuccessImage,
     message: statusSuccessMessage
   });
+  const [isNavOpened, setIsNavOpened] = useState(false);                                             // Стейт мобильная навигация открыта
+  const [userEmail, setUserEmail] = useState('');                                                    // Стейт email пользователя
+  const [isLoadingCards, setIsLoadingCards] = useState(true);                                        // Стейт прелоадер загрузки карточек
+  const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);                                  // Стейт прелоадер загрузки информации пользователя
+  const [isLoadingButtonText, setIsLoadingButtonText] = useState(false);                             // Стейт надпись на кнопке при сохранении контента
 
   // Обработчик клика по аватару
   function handleEditAvatarClick() {
@@ -110,6 +112,7 @@ function App() {
       })
   }
 
+  // Обработчик лайка картинки
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
@@ -148,19 +151,37 @@ function App() {
   }
 
   // Обработчик по кнопке Войти
-  function handleLogin(email) {
-    setLoggedIn(true);
-    setUserEmail(email);
+  function handleLogin(evt, password, email) {
+    auth.authorize(password, email)
+      .then(data => {
+        if (data.token) {
+          setLoggedIn(true);
+          setUserEmail(email);
+          history.push('/');
+        } else {
+          handleError(evt.target, data);
+        }
+      })
+      .catch(err => console.error(err));                                          // По указанным Логину и Паролю пользователь не найден. Проверьте введенные данные и повторите попытку.
   }
 
   // Обработчик по кнопке Зарегистрироваться
-  function handleRegister() {
-    setInfoTooltip({
-      ...infoTooltip,
-      isOpen: true,
-      image: statusSuccessImage,
-      message: statusSuccessMessage
-    });
+  function handleRegister(evt, password, email) {
+    auth.register(password, email)
+      .then(res => {
+        if (res !== 400) {
+          setInfoTooltip({
+            ...infoTooltip,
+            isOpen: true,
+            image: statusSuccessImage,
+            message: statusSuccessMessage
+          });
+          history.push('./sign-in');
+        } else {
+          handleError(evt.target, res);
+        }
+      })
+      .catch(err => console.error(err));                                             // Обработка ошибки handleError();
   }
 
   // Обработчик ошибки по кнопке Войти
@@ -180,6 +201,7 @@ function App() {
     setIsNavOpened(!isNavOpened);
   }
 
+  // Выход из аккаунта
   function signOut() {
     setLoggedIn(false);
     setIsNavOpened(false);
@@ -255,79 +277,80 @@ function App() {
   return (
     <AppContext.Provider value={{loggedIn, userEmail, handleLogin, signOut}}>
       <CurrentUserContext.Provider value={currentUser}>
-        <div className="page">
-          <div className="page__container">
-            <Header
-              isNavOpened={isNavOpened}
-              onClickNav={handleNavClick}
-            />
-            <Switch>
-              <Route path='/sign-up'>
-                <Register
-                  handleRegister={handleRegister}
-                  handleError={handleError}
-                />
-              </Route>
-              <Route path='sign-in'>
-                <Login
-                  handleLogin={handleLogin}
-                  handleError={handleError}
-                />
-              </Route>
-              <ProtectedRoute
-                exact path='/'
-                component={Main}
-                onEditAvatar={handleEditAvatarClick}
-                onEditProfile={handleEditProfileClick}
-                onAddPlace={handleAddPlaceClick}
-                onCardClick={handleCardClick}
-                onCardLike={handleCardLike}
-                onCardDelete={handleCardDelete}
-                cards={cards}
+        <div className="page__container">
+          <Header
+            isNavOpened={isNavOpened}
+            onClickNav={handleNavClick}
+          />
+          <Switch>
+            <Route path="/sign-up">
+              <Register
+                handleRegister={handleRegister}
+                handleError={handleError}
               />
-              <Route path='/'>
-                <Register to='/'/>
-              </Route>
-            </Switch>
-            {loggedIn && <Footer/>}
-            {/*Попап редактировать профиль*/}
-            <EditProfilePopup
-              isOpen={isEditProfilePopupOpen}
-              buttonText='Сохранить'
-              onClose={closeAllPopups}
-              onUpdateUser={handleUpdateUser}
-              isLoadingButtonText={isLoadingButtonText}/>
-            {/*Попап добавить карточку*/}
-            <AddPlacePopup
-              isOpen={isAddPlacePopupOpen}
-              onClose={closeAllPopups}
-              onAddPlace={handleAddPlaceSubmit}
-              isLoadingButtonText={isLoadingButtonText}/>
-            {/*Попап картинка*/}
-            <ImagePopup
-              card={selectedCard}
-              onClose={closeAllPopups}/>
-            {/*Попап удаления карточки*/}
-            <ConfirmationPopup
-              isOpen={isConfirmationPopupOpen}
-              onClose={closeAllPopups}
-              onCardDelete={handleCardDeleteSubmit}
-              card={deletedCard}
-              isLoadingButtonText={isLoadingButtonText}/>
-            {/*Попап обновить аватар*/}
-            <EditAvatarPopup
-              isOpen={isEditAvatarPopupOpen}
-              onClose={closeAllPopups}
-              onUpdateAvatar={handleUpdateAvatar}
-              isLoadingButtonText={isLoadingButtonText}/>
-            {/* <!-- Попап статус подтверждение --> */}
-            <InfoTooltip
-              isOpen={infoTooltip.isOpen}
-              onClose={closeAllPopups}
-              statusImage={infoTooltip.image}
-              statusText={infoTooltip.message}
-            />
-          </div>
+            </Route>
+            <Route path="/sign-in">
+              <Login
+                handleLogin={handleLogin}
+                handleError={handleError}
+              />
+            </Route>
+            <ProtectedRoute
+              exact path="/"
+              component={Main}
+              onEditAvatar={handleEditAvatarClick}
+              onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              cards={cards}
+              isLoadingCards={isLoadingCards}
+              isLoadingUserInfo={isLoadingUserInfo}
+            >
+            </ProtectedRoute>
+            <Route path="/">
+              <Redirect to="/"/>
+            </Route>
+          </Switch>
+          {loggedIn && <Footer/>}
+          {/* <!-- Попап редактировать профиль */}
+          <EditProfilePopup
+            isOpen={isEditProfilePopupOpen}
+            buttonText='Сохранить'
+            onClose={closeAllPopups}
+            onUpdateUser={handleUpdateUser}
+            isLoadingButtonText={isLoadingButtonText}/>
+          {/* Попап добавить карточку */}
+          <AddPlacePopup
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
+            onAddPlace={handleAddPlaceSubmit}
+            isLoadingButtonText={isLoadingButtonText}/>
+          {/* Попап картинка */}
+          <ImagePopup
+            onClose={closeAllPopups}
+            card={selectedCard}/>
+          {/* Попап удаления карточки */}
+          <ConfirmationPopup
+            isOpen={isConfirmationPopupOpen}
+            onClose={closeAllPopups}
+            onCardDelete={handleCardDeleteSubmit}
+            card={deletedCard}
+            isLoadingButtonText={isLoadingButtonText}/>
+          {/* Попап обновить аватар */}
+          <EditAvatarPopup
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar}
+            isLoadingButtonText={isLoadingButtonText}/>
+          {/* Попап статус подтверждение */}
+          <InfoTooltip
+            isOpen={infoTooltip.isOpen}
+            onClose={closeAllPopups}
+            statusImage={infoTooltip.image}
+            statusMessage={infoTooltip.message}
+          />
         </div>
       </CurrentUserContext.Provider>
     </AppContext.Provider>

@@ -5,7 +5,7 @@ function InfoTooltip({isOpen, onClose, statusImage, statusMessage}) {
     <PopupWithForm
       isOpened={isOpen}
       onClose={onClose}
-      name='sign-status'
+      name="sign-status"
       statusImage={statusImage}
       title={statusMessage}
     />

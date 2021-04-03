@@ -7,13 +7,13 @@ function Card(props) {
   // Определяем, являемся ли мы владельцем текущей карточки
   const isOwn = props.card.owner._id === currentUser._id;
   const cardDeleteButtonClassName = (
-    `button ${isOwn ? 'button_type_delete' : 'button_hidden'}`
+    `button ${isOwn ? 'button_type_remove-card' : 'button_type_remove-card-hidden'}`
   );
 
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
   const isLiked = props.card.likes.some(i => i._id === currentUser._id);
   const cardLikeButtonClassName = (
-    `button ${isLiked ? 'button_type_like-black' : 'button_type_like'}`
+    `button ${isLiked ? 'button_type_add-like-active' : 'button_type_add-like'}`
   );
 
   function handleImageClick() {
@@ -25,22 +25,22 @@ function Card(props) {
   }
 
   function handleDeleteClick() {
-    props.onCardDelete(props.card)
+    props.onCardDelete(props.card);
   }
 
   return (
-    <article className="card">
-      <img className="card__image" src={props.card.link} alt={props.card.name} onClick={handleImageClick}/>
-      <button className={cardDeleteButtonClassName} onClick={handleDeleteClick} aria-label="Удалить" type="button"/>
-      <div className="card__description">
+    <li className="card">
+      <button type="button" className={cardDeleteButtonClassName} onClick={handleDeleteClick}/>
+      <img src={props.card.link} alt={props.card.name} className="card__image" onClick={handleImageClick}/>
+      <div className="card__info">
         <h2 className="card__name">{props.card.name}</h2>
-        <div className="card__likes">
-          <button className={cardLikeButtonClassName} onClick={handleLikeClick} aria-label="Лайк" type="button"/>
-          <span className="card__like-counter">{props.card.likes.length ? props.card.likes.length : ''}</span>
+        <div className="card__like">
+          <button type="button" className={cardLikeButtonClassName} onClick={handleLikeClick}/>
+          <span className="card__like-count">{props.card.likes.length ? props.card.likes.length : ''}</span>
         </div>
       </div>
-    </article>
-  )
+    </li>
+  );
 }
 
 export default Card;

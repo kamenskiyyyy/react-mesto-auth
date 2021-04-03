@@ -1,22 +1,24 @@
 .button_type_submit {
   width: 100%;
-  height: 50px;
+  padding: 13px;
+  background-color: black;
   border-radius: 2px;
-  background: #000000;
-  font-size: 18px;
-  line-height: 22px;
-  text-align: center;
-  color: #FFFFFF;
-  margin-top: 28px;
+  color: white;
+  font-size: 14px;
+  line-height: 1.21;
+  transition: background-color .3s;
+  outline: auto;
 }
 
+/* Сделаю поведение этой кнопки аналогично остальным. Идея была в том, что при opacity: 0.8 цвет текста кнопки тоже становится прозрачным (не белым #fff, как в UI-KIT) */
 .button_type_submit:hover {
-  background: rgba(0, 0, 0, 0.8);
+  opacity: .8;
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (min-width: 600px) {
   .button_type_submit {
-    font-size: 14px;
-    line-height: 17px;
+    padding: 14px;
+    font-size: 18px;
+    line-height: 1.22;
   }
 }

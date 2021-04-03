@@ -33,40 +33,41 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, isLoadingButtonText}) 
       isOpened={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      name="person"
+      name="edit-profile"
       title="Редактировать профиль"
-      buttonText={isLoadingButtonText ? 'Сохранение...' : 'Сохранить'}
     >
-      <label className="popup__label">
+      <label className="form__field">
         <input
-          id='name'
-          type='text'
+          type="text"
+          name="name"
+          id="profile-name-input"
           value={name}
           onChange={handleChangeName}
-          minLength='2'
-          maxLength='40'
-          name='name'
-          className='popup__input popup__input_type_name'
           placeholder="Имя"
-          autoComplete="off"
-          required/>
-        <span id='name-error' className='popup__error'/>
+          className="form__input form__input_el_profile-name"
+          required
+          minLength="2"
+          maxLength="40"
+          autoComplete="off"/>
+        <span className="form__input-error profile-name-input-error"/>
       </label>
-      <label className="popup__label">
+      <label className="form__field">
         <input
-          id='feature'
-          type='text'
+          type="text"
+          name="description"
+          id="profile-job-input"
           value={description}
           onChange={handleChangeDescription}
-          minLength='2'
-          maxLength='200'
-          name='feature'
-          className='popup__input popup__input_type_feature'
           placeholder="Вид деятельности"
-          autoComplete="off"
-          required/>
-        <span id='feature-error' className='popup__error'/>
+          className="form__input form__input_el_profile-job"
+          required
+          minLength="2"
+          maxLength="200"
+          autoComplete="off"/>
+        <span className="form__input-error profile-job-input-error"/>
       </label>
+      <button type="submit"
+              className="button button_type_submit">{isLoadingButtonText ? 'Cохранение...' : 'Сохранить'}</button>
     </PopupWithForm>
   )
 }
