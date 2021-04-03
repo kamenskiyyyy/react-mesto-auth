@@ -1,6 +1,6 @@
+import {useContext} from 'react';
 import {Route, Redirect} from 'react-router-dom';
-import {AppContext} from "../contexts/AppContext";
-import {useContext} from "react";
+import {AppContext} from '../contexts/AppContext';
 
 function ProtectedRoute({component: Component, ...props}) {
   const value = useContext(AppContext);

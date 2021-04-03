@@ -1,5 +1,5 @@
-import PopupWithForm from "./PopupWithForm";
-import {useRef} from "react";
+import {useRef} from 'react';
+import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, isLoadingButtonText}) {
   const inputAvatar = useRef();
@@ -27,7 +27,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, isLoadingButtonText})
           id="avatar-link-input"
           ref={inputAvatar}
           className="form__input form__input_size_small form__input_el_avatar-link"
-          placeholder="Введите ссылку на фото"
+          placeholder="Ссылка на изображение"
           required
           autoComplete="off"/>
         <span className="form__input-error avatar-link-input-error"/>

@@ -1,5 +1,5 @@
-import PopupWithForm from "./PopupWithForm";
 import {useState} from 'react';
+import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({isOpen, onClose, onAddPlace, isLoadingButtonText}) {
   const [name, setName] = useState('');
@@ -47,15 +47,16 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, isLoadingButtonText}) {
         <span className="form__input-error card-name-input-error"/>
       </label>
       <label className="form__field">
-        <input type="url"
-               name="card-link"
-               id="card-link-input"
-               value={link}
-               onChange={handleCardLinkChange}
-               className="form__input form__input_size_small form__input_el_card-link"
-               placeholder="Ссылка на картинку"
-               required
-               autoComplete="off"/>
+        <input
+          type="url"
+          name="card-link"
+          id="card-link-input"
+          value={link}
+          onChange={handleCardLinkChange}
+          className="form__input form__input_size_small form__input_el_card-link"
+          placeholder="Ссылка на картинку"
+          required
+          autoComplete="off"/>
         <span className="form__input-error card-link-input-error"/>
       </label>
       <button type="submit"

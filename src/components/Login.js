@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState} from 'react';
 
 function Login({handleLogin}) {
   const [userData, setUserData] = useState({
@@ -33,7 +33,7 @@ function Login({handleLogin}) {
           onSubmit={handleSubmit}>
           <fieldset className="sign__fieldset">
             <input
-              type="text"
+              type="email"
               name="email"
               value={userData.email}
               className="sign__input"

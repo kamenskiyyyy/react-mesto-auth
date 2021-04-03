@@ -87,7 +87,7 @@ export const api = new Api({
     authorization: 'af47fd49-b31e-4449-b574-1e5cb0a80b14',
     'Content-Type': 'application/json'
   }
-})
+});
 
 class Auth {
   constructor(options) {
@@ -108,8 +108,8 @@ class Auth {
           return data;
         }
       })
-      .catch(err => {
-        console.error(err);
+      .catch((err) => {
+        console.log(err);
         return err;
       });
   }
@@ -129,8 +129,8 @@ class Auth {
           return data;
         }
       })
-      .catch(err => {
-        console.error(err);
+      .catch((err) => {
+        console.log(err);
         return err;
       });
   }
@@ -147,8 +147,8 @@ class Auth {
       .then(data => {
         return data;
       })
-      .catch(err => {
-        console.error(err);
+      .catch((err) => {
+        console.log(err);
         return err;
       });
   }

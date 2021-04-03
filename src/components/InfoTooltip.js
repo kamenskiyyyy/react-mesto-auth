@@ -1,4 +1,4 @@
-import PopupWithForm from "./PopupWithForm";
+import PopupWithForm from './PopupWithForm';
 
 function InfoTooltip({isOpen, onClose, statusImage, statusMessage}) {
   return (

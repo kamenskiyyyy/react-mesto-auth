@@ -1,4 +1,4 @@
-import PopupWithForm from "./PopupWithForm";
+import PopupWithForm from './PopupWithForm';
 
 function ConfirmationPopup({card, isOpen, onClose, onCardDelete, isLoadingButtonText}) {
   function handleSubmit(evt) {

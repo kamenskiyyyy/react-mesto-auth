@@ -4,7 +4,7 @@ function PopupWithForm(props) {
       if (e.target.classList.contains('popup')) props.onClose()
     }}>
       <div className="popup__container">
-        <button type="button" aria-label="Закрыть" className="button button_type_close-popup" onClick={props.onClose}></button>
+        <button type="button" className="button button_type_close-popup" onClick={props.onClose}/>
         <form action="#" name={`${props.name}`} className="form" onSubmit={props.onSubmit} noValidate>
           {props.statusImage &&
           <img src={props.statusImage} alt="Статус запроса" className="popup__image popup__image_type_status"/>}

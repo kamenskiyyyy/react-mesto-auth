@@ -11,6 +11,7 @@ import ImagePopup from './ImagePopup';
 import {api, auth} from '../utils/api';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import {AppContext} from '../contexts/AppContext';
+import avatarDefault from './../images/profile__avatar.svg';
 import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from './ProtectedRoute';
@@ -30,7 +31,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState({                                                   // Стейт данные текущего пользователя
     name: '',
     about: '',
-    email: ''
+    email: '',
+    avatar: avatarDefault
   });
   const [cards, setCards] = useState([]);                                                            // Стейт массив карточек
   const [loggedIn, setLoggedIn] = useState(false);                                                   // Стейт-переменная статус пользователя, вход в систему
@@ -91,11 +93,9 @@ function App() {
       .then(data => {
         setCurrentUser({...data});
         closeAllPopups();
-      })
-      .catch(err => console.error(err))
-      .finally(() => {
         setIsLoadingButtonText(false);
       })
+      .catch(err => console.log(err));
   }
 
   // Обработчик обновления аватара
@@ -105,11 +105,9 @@ function App() {
       .then(data => {
         setCurrentUser({...data});
         closeAllPopups();
-      })
-      .catch(err => console.error(err))
-      .finally(() => {
         setIsLoadingButtonText(false);
       })
+      .catch(err => console.log(err));
   }
 
   // Обработчик лайка картинки
@@ -117,9 +115,10 @@ function App() {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
       .then(newCard => {
-        setCards(cards => cards.map(c => c._id === card._id ? newCard : c));
+        const newCards = cards.map(c => c._id === card._id ? newCard : c);
+        setCards(newCards);
       })
-      .catch(err => console.error(err));
+      .catch(err => console.log(err));
   }
 
   // Обработчик подтверждения удаления карточки
@@ -127,13 +126,12 @@ function App() {
     setIsLoadingButtonText(true);
     api.deleteCard(cardId)
       .then(() => {
-        setCards(cards.filter(c => c._id !== cardId));
+        const newCards = cards.filter(c => c._id !== cardId);
+        setCards(newCards);
         closeAllPopups();
-      })
-      .catch(err => console.error(err))
-      .finally(() => {
         setIsLoadingButtonText(false);
       })
+      .catch(err => console.log(err));
   }
 
   // Обработчик добавления карточки
@@ -143,11 +141,9 @@ function App() {
       .then(newCard => {
         setCards([newCard, ...cards]);
         closeAllPopups();
-      })
-      .catch(err => console.error(err))
-      .finally(() => {
         setIsLoadingButtonText(false);
       })
+      .catch(err => console.log(err));
   }
 
   // Обработчик по кнопке Войти
@@ -162,7 +158,7 @@ function App() {
           handleError(evt.target, data);
         }
       })
-      .catch(err => console.error(err));                                          // По указанным Логину и Паролю пользователь не найден. Проверьте введенные данные и повторите попытку.
+      .catch(err => console.log(err));                                          // По указанным Логину и Паролю пользователь не найден. Проверьте введенные данные и повторите попытку. 
   }
 
   // Обработчик по кнопке Зарегистрироваться
@@ -181,7 +177,7 @@ function App() {
           handleError(evt.target, res);
         }
       })
-      .catch(err => console.error(err));                                             // Обработка ошибки handleError();
+      .catch(err => console.log(err));                                                                // Обработка ошибки handleError();
   }
 
   // Обработчик ошибки по кнопке Войти
@@ -235,11 +231,9 @@ function App() {
     api.getInitialCards()
       .then(initialCards => {
         setCards(initialCards);
-      })
-      .catch(err => console.error(err))
-      .finally(() => {
         setIsLoadingCards(false);
       })
+      .catch(err => console.log(err));
   }, []);
 
   // Добавить/удалить слушателя нажатия Esc при открытии попапа
@@ -267,11 +261,9 @@ function App() {
     api.getUserInfo()
       .then(data => {
         setCurrentUser({...data});
-      })
-      .catch(err => console.error(err))
-      .finally(() => {
         setIsLoadingUserInfo(false);
       })
+      .catch(err => console.log(err));
   }, []);
 
   return (
@@ -314,37 +306,43 @@ function App() {
             </Route>
           </Switch>
           {loggedIn && <Footer/>}
-          {/* <!-- Попап редактировать профиль */}
+          {/* <!-- Попап редактировать профиль --> */}
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
-            buttonText='Сохранить'
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
-            isLoadingButtonText={isLoadingButtonText}/>
-          {/* Попап добавить карточку */}
+            isLoadingButtonText={isLoadingButtonText}
+          />
+          {/* <!-- Попап добавить карточку --> */}
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
-            isLoadingButtonText={isLoadingButtonText}/>
-          {/* Попап картинка */}
+            isLoadingButtonText={isLoadingButtonText}
+          />
+          {/* <!-- Попап картинка --> */}
           <ImagePopup
             onClose={closeAllPopups}
-            card={selectedCard}/>
-          {/* Попап удаления карточки */}
+            card={selectedCard}
+          />
+          {/* <!-- Попап удаления карточки --> */}
           <ConfirmationPopup
             isOpen={isConfirmationPopupOpen}
             onClose={closeAllPopups}
             onCardDelete={handleCardDeleteSubmit}
             card={deletedCard}
-            isLoadingButtonText={isLoadingButtonText}/>
-          {/* Попап обновить аватар */}
+            isLoadingButtonText={isLoadingButtonText}
+          />
+
+          {/* <!-- Попап обновить аватар --> */}
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
-            isLoadingButtonText={isLoadingButtonText}/>
-          {/* Попап статус подтверждение */}
+            isLoadingButtonText={isLoadingButtonText}
+          />
+
+          {/* <!-- Попап статус подтверждение --> */}
           <InfoTooltip
             isOpen={infoTooltip.isOpen}
             onClose={closeAllPopups}

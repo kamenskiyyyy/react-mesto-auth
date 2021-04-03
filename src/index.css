@@ -2,7 +2,6 @@
 @import url('./vendor/fonts/fonts.css');
 @import url('./blocks/page/page.css');
 @import url('./blocks/page/__container/page__container.css');
-
 @import url('./blocks/preloader/preloader.css');
 @import url('./blocks/preloader/_type/preloader_type_text.css');
 @import url('./blocks/preloader/_type/preloader_type_text-long.css');

@@ -1,5 +1,5 @@
-import logo from "../images/logo.svg";
-import NavBar from "./NavBar";
+import logo from './../images/header__logo.svg';
+import NavBar from './NavBar';
 
 function Header({isNavOpened, onClickNav}) {
   return (

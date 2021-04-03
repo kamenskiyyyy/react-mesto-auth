@@ -1,11 +1,11 @@
-import {Link} from "react-router-dom";
-import {useState} from "react";
+import {useState} from 'react';
+import {Link} from 'react-router-dom';
 
 function Register({handleRegister}) {
   const [userData, setUserData] = useState({
     password: '',
     email: ''
-  })
+  });
 
   function handleChange(evt) {
     const {name, value} = evt.target;
@@ -57,7 +57,7 @@ function Register({handleRegister}) {
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export default Register;

@@ -1,6 +1,6 @@
 import {useContext} from 'react';
-import Card from "./Card";
-import {CurrentUserContext} from "../contexts/CurrentUserContext";
+import Card from './Card';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import Preloader from "./Preloader";
 
 function Main({
@@ -35,6 +35,7 @@ function Main({
         </div>
         <button type="button" className="button button_type_add-card" onClick={onAddPlace}/>
       </section>
+
       <section className="elements">
         {/*Индикатор загрузки карточек*/}
         {isLoadingCards && <Preloader className={`preloader preloader_type_image lds-ripple`}/>}
