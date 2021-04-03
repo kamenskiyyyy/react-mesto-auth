@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import {Route, Switch, Redirect, useHistory} from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
@@ -20,7 +20,7 @@ import statusSuccessImage from './../images/success.svg';
 import statusErrorImage from './../images/error.svg';
 import {statusErrors, statusSuccessMessage} from '../utils/constants';
 
-function App() {
+function App(callback, deps) {
   const history = useHistory();
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);                       // Стейт попап редактирования профиля открыт
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);                             // Стейт попап добавить карточку открыт
@@ -69,7 +69,7 @@ function App() {
   }
 
   // Функция закрытия всех попапов
-  function closeAllPopups() {
+  const closeAllPopups = useCallback(() => {
     setInfoTooltip({
       ...infoTooltip,
       isOpen: false
@@ -79,7 +79,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsConfirmationPopupOpen(false);
     setSelectedCard(null);
-  }
+  }, [infoTooltip])
 
   // Обработчик клика по картинке карточки
   function handleCardClick(card) {
@@ -206,7 +206,7 @@ function App() {
   }
 
   // Проверка токена при повторном посещении сайта
-  function tokenCheck() {
+  const tokenCheck = useCallback(() => {
     const token = localStorage.getItem('token');
     if (token) {
       auth.getContent(token)
@@ -220,11 +220,11 @@ function App() {
     } else {
       setLoggedIn(false);
     }
-  }
+  }, [history])
 
   useEffect(() => {
     tokenCheck();
-  }, []);
+  }, [tokenCheck]);
 
   // Загрузка карточек по умолчанию
   useEffect(() => {

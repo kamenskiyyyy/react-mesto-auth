@@ -36,7 +36,6 @@ function Register({handleRegister}) {
             className="sign__input"
             onChange={handleChange}
             placeholder="Email"
-            autoComplete="off"
             required
           />
           <input
@@ -46,7 +45,6 @@ function Register({handleRegister}) {
             className="sign__input"
             onChange={handleChange}
             placeholder="Пароль"
-            autoComplete="off"
             required
           />
           <button type="submit" className="sign__button">Зарегистрироваться</button>
