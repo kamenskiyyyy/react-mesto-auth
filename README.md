@@ -1,4 +1,4 @@
-# Проект 4: ![mesto-img](./src/images/logo.svg)
+# Проект 4: ![mesto-img](./src/images/header__logo.svg)
 
 
 ### Обзор
