@@ -8,7 +8,7 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ConfirmationPopup from './ConfirmationPopup';
 import ImagePopup from './ImagePopup';
-import {api, auth} from '../utils/api';
+import {api} from '../utils/api';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import {AppContext} from '../contexts/AppContext';
 import avatarDefault from './../images/profile__avatar.svg';
@@ -19,6 +19,7 @@ import InfoTooltip from './InfoTooltip';
 import statusSuccessImage from './../images/success.svg';
 import statusErrorImage from './../images/error.svg';
 import {statusErrors, statusSuccessMessage} from '../utils/constants';
+import {auth} from "../utils/auth";
 
 function App(callback, deps) {
   const history = useHistory();
@@ -149,35 +150,27 @@ function App(callback, deps) {
   // Обработчик по кнопке Войти
   function handleLogin(evt, password, email) {
     auth.authorize(password, email)
-      .then(data => {
-        if (data.token) {
-          setLoggedIn(true);
-          setUserEmail(email);
-          history.push('/');
-        } else {
-          handleError(evt.target, data);
-        }
+      .then(() => {
+        setLoggedIn(true);
+        setUserEmail(email);
+        history.push('/');
       })
-      .catch(err => console.log(err));                                          // По указанным Логину и Паролю пользователь не найден. Проверьте введенные данные и повторите попытку. 
+      .catch(err => handleError(evt.target, err));                                          // По указанным Логину и Паролю пользователь не найден. Проверьте введенные данные и повторите попытку.
   }
 
   // Обработчик по кнопке Зарегистрироваться
   function handleRegister(evt, password, email) {
     auth.register(password, email)
-      .then(res => {
-        if (res !== 400) {
-          setInfoTooltip({
-            ...infoTooltip,
-            isOpen: true,
-            image: statusSuccessImage,
-            message: statusSuccessMessage
-          });
-          history.push('./sign-in');
-        } else {
-          handleError(evt.target, res);
-        }
+      .then(() => {
+        setInfoTooltip({
+          ...infoTooltip,
+          isOpen: true,
+          image: statusSuccessImage,
+          message: statusSuccessMessage
+        });
+        history.push('./sign-in');
       })
-      .catch(err => console.log(err));                                                                // Обработка ошибки handleError();
+      .catch(err => handleError(evt.target, err));                                                                // Обработка ошибки handleError();
   }
 
   // Обработчик ошибки по кнопке Войти
