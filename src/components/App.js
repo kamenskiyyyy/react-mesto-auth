@@ -217,6 +217,10 @@ function App(callback, deps) {
             history.push('/');
           }
         })
+        .catch(err => {
+          console.log(err)
+          localStorage.removeItem('token')
+        })
     } else {
       setLoggedIn(false);
     }
