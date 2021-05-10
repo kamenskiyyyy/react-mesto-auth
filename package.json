@@ -2,7 +2,6 @@
   "name": "mesto-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kamenskiyyyy.github.io/react-mesto-auth/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -20,7 +19,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy gh-pages": "gh-pages -d build",
-    "deploy": "npm run build && scp -r ./build/* admin@84.252.137.79:/home/praktikum/mesto-frontend"
+    "deploy": "npm run build && scp -r ./build/* admin@84.252.137.79:/home/admin/mesto-frontend"
   },
   "eslintConfig": {
     "extends": [
