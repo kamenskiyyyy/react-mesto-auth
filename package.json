@@ -19,7 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build"
+    "deploy gh-pages": "gh-pages -d build",
+    "deploy": "npm run build && scp -r ./build/* admin@84.252.137.79:/home/praktikum/mesto-frontend"
   },
   "eslintConfig": {
     "extends": [
