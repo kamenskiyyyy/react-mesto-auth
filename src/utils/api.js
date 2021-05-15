@@ -50,18 +50,17 @@ class Api {
       headers: this.headers,
     })
       .then(handleOriginalResponse);
-    ;
   }
 
   changeLikeCardStatus(cardId, setLike) {
     if (setLike) {
-      return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+      return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
         method: 'PUT',
         headers: this.headers,
       })
         .then(handleOriginalResponse);
     } else {
-      return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+      return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
         method: 'DELETE',
         headers: this.headers,
       })
@@ -82,9 +81,9 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-20',
+  baseUrl: 'https://api.mesto.kamenskiyyyy.nomoredomains.club',
   headers: {
-    authorization: 'af47fd49-b31e-4449-b574-1e5cb0a80b14',
+    authorization: `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json'
   }
 });
